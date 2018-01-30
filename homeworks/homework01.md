@@ -18,6 +18,6 @@ You would want to turn off code optimization to make debugging easier (bugs can 
 The gcc compiler is designed to generate assembly code for the computer the user is using, so if people are using different machines, the type of assembly code that is generated varies.
 6) If you spell a variable name wrong, or if you spell a function name wrong, the error messages 
 you get might look very different.  Why?
-If you spell a variable name wrong, you will get a static checking error, but if you spell a function name wrong, you'll get an error in the linking stage. For this reason, the errors would look different. 
+If you spell a variable name wrong, you will get a static checking error, but if you spell a function name wrong, you'll get an error in the linking stage. For this reason, the errors would look different. g
 7) What is a segmentation fault?
 A segmentation fault is a type of error that appears when someone tries to read or write to the wrong location in memory.
