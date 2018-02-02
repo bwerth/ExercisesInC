@@ -9,7 +9,7 @@
 1) Give an example of a feature common in interpreted languages that is rare in compiled languages.
 Interpreted languages support dynamic types, which means the type of a variable doesn't need to be known until the program is running.
 2) Name two advantages of static typing over dynamic typing.
-Type checking means errors can be found quicker, but static typing also saves space compared to dynamic typing.
+Type checking means errors can be found quicker, but static typing also saves space compared to dynamic typing. There are a lot of things that you don't need at compile time anymore with a compiled language. Static compiled languages are faster because the overhead is handled at compile time instead of at run time.
 3) Give an example of a static semantic error.
 If a function is called in code with the wrong number of inputs or an input that doesn't match the correct type, there is a static semantic error.
 4) What are two reasons you might want to turn off code optimization?
