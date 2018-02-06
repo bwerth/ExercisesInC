@@ -9,7 +9,12 @@ License: GNU GPLv3
 #include <stdlib.h>
 
 #define SIZE 5
-
+//The warning means the address space is not accessible outside of 
+//the function in which it is defined. When I run the program, I get
+//that the array pointer in foo and bar are at the same memory address.
+//When I comment out the printf statements in foo and bar, I get
+//weird values from the array, I think because the array is trying to access
+//weird places in memory.
 int *foo() {
     int i;
     int array[SIZE];
