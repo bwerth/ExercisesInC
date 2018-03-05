@@ -29,7 +29,7 @@ We use a biased integer to represent the exponent instead of a sign bit or two's
 4) Following the example in Section 5.3, write the 32-bit binary representation of -13 in single precision 
 IEEE floating-point.  What would you get if you accidentally interpreted this value as an integer?
 
--13 = 10000000000000000000000000001101 = 2155872262.
+-13 = 11000001010100000000000000001101 = 3243245581.
 
 5) Write a function that takes a string and converts from lower-case to upper-case by flipping the sixth bit.  
 As a challenge, you can make a faster version by reading the string 32 or 64 bits at a time, rather than one
