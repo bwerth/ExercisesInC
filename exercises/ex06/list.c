@@ -54,8 +54,15 @@ void print_list(Node **list) {
 * returns: int or -1 if the list is empty
 */
 int pop(Node **list) {
-    // FILL THIS IN!
-    return 0;
+    Node *current = *list;
+    if(current == NULL){
+        return -1;
+    }
+    else{
+        *list = current->next;
+        return current->val;
+        free(current);
+    }
 }
 
 
@@ -65,9 +72,28 @@ int pop(Node **list) {
 * val: value to add
 */
 void push(Node **list, int val) {
-    // FILL THIS IN!
+    Node* current = *list;
+    Node* addedOne = malloc(sizeof(Node));
+    addedOne->val = val;
+    addedOne->next = current;
+    *list = addedOne;
 }
 
+/* Handles recursion for removeVal as well as removal
+ * of the identified val if found.
+ * current: pointer to a Node
+ * val: value to remove
+ */
+int removeValRecurse(Node* current,int val){
+    if (current->next == NULL){
+        return 0;
+    } else if(current->next->val == val){
+        current->next = current->next->next;
+        return 1;
+    } else{
+        return removeValRecurse(current->next,val);
+    }
+}
 
 /* Removes the first element with the given value
 *
@@ -79,10 +105,28 @@ void push(Node **list, int val) {
 * returns: number of nodes removed
 */
 int remove_by_value(Node **list, int val) {
-    // FILL THIS IN!
-    return 0;
+    Node* current = *list;
+    if(current->val == val){
+        pop(list);
+        return 1;
+    } 
+    return removeValRecurse(current,val);
 }
 
+/* Handles recursion as well as pointer reassignment
+ * with the list and current Node passed as inputs
+ * list: pointer to pointer to Node
+ * currentNode: pointer to a Node 
+ */
+
+void reverseNode(Node** list,Node* currentNode){
+    if(currentNode->next!=NULL){
+        reverseNode(list,currentNode->next);
+        currentNode->next->next = currentNode;
+    } else{
+        *list = currentNode;
+    }
+}
 
 /* Reverses the elements of the list.
 *
@@ -91,7 +135,9 @@ int remove_by_value(Node **list, int val) {
 * list: pointer to pointer to Node
 */
 void reverse(Node **list) {
-    // FILL THIS IN!
+    Node* current = *list;
+    reverseNode(list,current);
+    current->next = NULL;
 }
 
 
