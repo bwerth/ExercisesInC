@@ -30,22 +30,32 @@ double get_seconds() {
 }
 
 
-void child_code(int i)
+void child_code(int i,int* test_stack,int* test_heap)
 {
     sleep(i);
     printf("Hello from child %d.\n", i);
+    printf("%d %d\n",*test_stack,*test_heap);
     exit(i);
 }
 
 // main takes two parameters: argc is the number of command-line
-// arguments; argv is an array of strings containing the command
+// arguments; argv is an array of strings containing the commands
 // line arguments
 int main(int argc, char *argv[])
 {
+
+    //This main function sweeps through the parent and child processes, printing statements along the way
+    //to confirm everything is working. Notably, the children exit with the child number passed to it. Towards
+    //the end of main, the process number is printed along with the exit value of the child process, which is
+    //the child process number. However, the process number is different from within the child process or the parent
+    //process, which is why the print values are different.
     int status;
     pid_t pid;
     double start, stop;
     int i, num_children;
+    int test_stack = 0;
+    int* test_heap = malloc(sizeof(int));
+    *test_heap = 0;
 
     // the first command-line argument is the name of the executable.
     // if there is a second, it is the number of children to create.
@@ -71,15 +81,19 @@ int main(int argc, char *argv[])
             exit(1);
         }
 
+        test_stack += 1;
+        *test_heap += 1;
+        
         /* see if we're the parent or the child */
         if (pid == 0) {
-            child_code(i);
+            child_code(i,&test_stack,test_heap);
         }
     }
 
     /* parent continues */
     printf("Hello from the parent.\n");
 
+    printf("%d %d\n",test_stack,*test_heap);
     for (i=0; i<num_children; i++) {
         pid = wait(&status);
 
@@ -98,4 +112,3 @@ int main(int argc, char *argv[])
     printf("Elapsed time = %f seconds.\n", stop - start);
 
     exit(0);
-}
