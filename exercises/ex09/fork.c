@@ -87,6 +87,7 @@ int main(int argc, char *argv[])
         /* see if we're the parent or the child */
         if (pid == 0) {
             child_code(i,&test_stack,test_heap);
+            exit(i);
         }
     }
 

@@ -1,6 +1,8 @@
 /* Example code for Exercises in C.
+
 Copyright 2016 Allen Downey
 License: Creative Commons Attribution-ShareAlike 3.0
+
 */
 
 #include <stdio.h>
@@ -52,28 +54,8 @@ void print_matrix(Matrix *matrix) {
     }
 }
 
-<<<<<<< HEAD
-int cmpfunction(const void* a, const void* b){
-   return (((double*) a)[0]-((double*) b)[0]);
-}
-
-/* Sort rows in descending order by first element.
-*/
-void sort_matrix_rows(Matrix *matrix) {
-    qsort(matrix->rows,matrix->num_rows,sizeof(double*),cmpfunction);
-}
-
-/* Perform row reduction.
-=======
-/* Sort rows in descending order by first element.
-*/
-void sort_matrix_rows(Matrix *matrix) {
-    // TODO: Write this function
-}
-
 /* Perform row reduction.
 
->>>>>>> 82ebb25d34fff28903b7a1d71c623fd060e8f653
 Subtract a multiple of row j from row i so that the first element
 of row i is 0.
 */
@@ -96,18 +78,10 @@ int main () {
     }
 
     print_matrix(matrix);
-    printf("sorting...\n");
-    sort_matrix_rows(matrix);
-    print_matrix(matrix);
-
     printf("reducing...\n");
     reduce_matrix_rows(matrix, 1, 0);
     reduce_matrix_rows(matrix, 2, 0);
     print_matrix(matrix);
 
-    //free_matrix(matrix);
-<<<<<<< HEAD
+    free_matrix(matrix);
 }
-=======
-}
->>>>>>> 82ebb25d34fff28903b7a1d71c623fd060e8f653
