@@ -15,7 +15,6 @@ typedef struct node {
     struct node *next;
 } Node;
 
-
 /* Makes a new node structure.
 *
 * val: value to store in the node.

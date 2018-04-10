@@ -56,7 +56,28 @@ Subtract a multiple of row j from row i so that the first element
 of row i is 0.
 */
 void reduce_matrix_rows(Matrix *matrix, int i, int j) {
-    // TODO: Fill this in.
+    double** rows = matrix->rows;
+    double** ptr;
+    int rowNum = 0;
+    for (ptr = rows; *ptr; ptr++){
+        printf("%d %d\n",rowNum,j);
+        if(rowNum == j){
+            double* jRow = *ptr;
+            printf("Equal\n");
+        }
+        rowNum = rowNum+1;
+    }
+    rowNum = 0;
+    for (ptr = rows; *ptr; ptr++){
+        if(rowNum == i){
+            double iZero = *ptr[0];
+            double multiple = iZero / *jRow[0];
+            for(i=0;i<matrix->num_cols;i++){
+                *ptr[i] = *ptr[i]*multiple;
+            }
+        }
+        rowNum = rowNum+1;
+    }
 }
 
 int main () {
