@@ -112,4 +112,3 @@ int main(int argc, char *argv[])
     printf("Elapsed time = %f seconds.\n", stop - start);
 
     exit(0);
-}
