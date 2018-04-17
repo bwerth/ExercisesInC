@@ -19,6 +19,7 @@ Based on an example in Head First C.
 #include <signal.h>
 
 int score = 0;
+int flag_time_up = 0;
 
 int catch_signal(int sig, void (*handler) (int)) {
     struct sigaction action;
@@ -36,7 +37,7 @@ void end_game(int sig)
 
 void times_up(int sig) {
     puts("\nTIME'S UP!");
-    raise(SIGINT);
+    flag_time_up = 1;
 }
 
 int main(void) {
@@ -59,6 +60,12 @@ int main(void) {
             score++;
         } else {
             printf("\nWrong! Score: %i\n", score);
+        }
+        if(flag_time_up==1){
+            flag_time_up = 2;
+        } else if(flag_time_up==2){
+            flag_time_up = 0;
+            raise(SIGINT);
         }
     }
     return 0;
