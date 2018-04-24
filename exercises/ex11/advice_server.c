@@ -43,6 +43,8 @@ int main()
     name.sin_family = PF_INET;
     name.sin_port = (in_port_t)htons(30000);
     name.sin_addr.s_addr = htonl(INADDR_ANY);
+    printf("sin_port:%d\n",name.sin_port);
+    printf("sin_addr.s_addr:%d\n",name.sin_addr.s_addr);
 
     // set socket options
     int reuse = 1;

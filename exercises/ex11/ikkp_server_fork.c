@@ -90,7 +90,7 @@ void bind_to_port(int socket, int port) {
 */
 int say(int socket, char *s)
 {
-    int res = send(socket, s, 500000, 0);
+    int res = send(socket, s, strlen(s), 0);
     if (res == -1)
         error("Error talking to the client");
     return res;
@@ -155,27 +155,31 @@ int main(int argc, char *argv[])
         printf("Waiting for connection on port %d\n", port);
         int connect_d = open_client_socket();
 
-        if (say(connect_d, intro_msg) == -1) {
+        if (!fork()){
+            if (say(connect_d, intro_msg) == -1) {
+                close(connect_d);
+                continue;
+            }
+
+            read_in(connect_d, buf, sizeof(buf));
+            // TODO (optional): check to make sure they said "Who's there?"
+
+            if (say(connect_d, "Surrealist giraffe.\n") == -1) {
+                close(connect_d);
+                continue;
+            }
+
+            read_in(connect_d, buf, sizeof(buf));
+            // TODO (optional): check to make sure they said "Surrealist giraffe who?"
+
+            if (say(connect_d, "Bathtub full of brightly-colored machine tools.\n") == -1) {
+                close(connect_d);
+                continue;
+            }
+
             close(connect_d);
-            continue;
+            exit(0);
         }
-
-        read_in(connect_d, buf, sizeof(buf));
-        // TODO (optional): check to make sure they said "Who's there?"
-
-        if (say(connect_d, "Surrealist giraffe.\n") == -1) {
-            close(connect_d);
-            continue;
-        }
-
-        read_in(connect_d, buf, sizeof(buf));
-        // TODO (optional): check to make sure they said "Surrealist giraffe who?"
-
-        if (say(connect_d, "Bathtub full of brightly-colored machine tools.\n") == -1) {
-            close(connect_d);
-            continue;
-        }
-
         close(connect_d);
     }
     return 0;

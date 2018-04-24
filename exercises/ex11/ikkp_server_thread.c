@@ -14,6 +14,7 @@ Modified by Allen Downey.
 #include <sys/types.h>
 #include <unistd.h>
 #include <signal.h>
+#include <pthread.h>
 
 int listener_d = 0;
 
@@ -90,7 +91,7 @@ void bind_to_port(int socket, int port) {
 */
 int say(int socket, char *s)
 {
-    int res = send(socket, s, 500000, 0);
+    int res = send(socket, s, strlen(s), 0);
     if (res == -1)
         error("Error talking to the client");
     return res;
@@ -133,9 +134,39 @@ int read_in(int socket, char *buf, int len)
 
 char intro_msg[] = "Internet Knock-Knock Protocol Server\nKnock, knock.\n";
 
+void* thread_interaction(void* connect_d){
+    char buf[255];
+    int connects_d = *((int*)connect_d);
+    if (say(connects_d, intro_msg) == -1) {
+        printf("Test2\n");
+        close(connects_d);
+        return;
+    }
+
+    read_in(connects_d, buf, sizeof(buf));
+    // TODO (optional): check to make sure they said "Who's there?"
+
+    if (say(connects_d, "Surrealist giraffe.\n") == -1) {
+        close(connects_d);
+        return;
+    }
+
+    read_in(connects_d, buf, sizeof(buf));
+    // TODO (optional): check to make sure they said "Surrealist giraffe who?"
+
+    if (say(connects_d, "Bathtub full of brightly-colored machine tools.\n") == -1) {
+        close(connects_d);
+        return;
+    }
+
+    close(connects_d);
+    return;
+}
+
 int main(int argc, char *argv[])
 {
-    char buf[255];
+    pthread_t threads[20];
+    int index = 0;
 
     // set up the signal handler
     if (catch_signal(SIGINT, handle_shutdown) == -1)
@@ -149,34 +180,14 @@ int main(int argc, char *argv[])
     if (listen(listener_d, 10) == -1)
         error("Can't listen");
 
-
-
     while (1) {
         printf("Waiting for connection on port %d\n", port);
         int connect_d = open_client_socket();
 
-        if (say(connect_d, intro_msg) == -1) {
-            close(connect_d);
-            continue;
+        if(pthread_create(&threads[index],NULL,thread_interaction,&connect_d) == -1){
+            error("Cant create thread ");
         }
-
-        read_in(connect_d, buf, sizeof(buf));
-        // TODO (optional): check to make sure they said "Who's there?"
-
-        if (say(connect_d, "Surrealist giraffe.\n") == -1) {
-            close(connect_d);
-            continue;
-        }
-
-        read_in(connect_d, buf, sizeof(buf));
-        // TODO (optional): check to make sure they said "Surrealist giraffe who?"
-
-        if (say(connect_d, "Bathtub full of brightly-colored machine tools.\n") == -1) {
-            close(connect_d);
-            continue;
-        }
-
-        close(connect_d);
+        index = index + 1;
     }
     return 0;
 }
