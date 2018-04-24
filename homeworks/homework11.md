@@ -24,9 +24,13 @@ You should set the initial value of the semaphore mutex to one to signify that i
 4) In my solution to the producers-consumers problem using Semaphores,
 what does it mean if the value of `queue->spaces` is `3` at some point in time?
 
+<<<<<<< HEAD
 This means there are three empty spaces in the queue.
 
 5) What does it mean if `queue->space` is `-3`?
+=======
+5) What does it mean if `queue->spaces` is `-3`?
+>>>>>>> 2eb34b55a445205fcd24f378435b99c86d925853
 
 This means the queue is three spaces too short.
 
