@@ -208,7 +208,18 @@ int main() {
     insert_by_index(&empty, 1, 0);
     print_list(&empty);
 
+    free(empty);
+    free(test_list->next->next->next->next->next->next);
+    free(test_list->next->next->next->next->next);
+    free(test_list->next->next->next->next);
+    free(test_list->next->next->next);
+    free(test_list->next->next);
+    free(test_list->next);
+    free(test_list);
+
     Node *something = make_something();
+    free(something->next->next);
+    free(something->next);
     free(something);
 
     return 0;
